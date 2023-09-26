@@ -1,0 +1,88 @@
+#include<iostream>
+
+using namespace std;
+
+int main(){
+
+    int cantidadDinero,cont50mil=0,cont20mil=0,cont10mil=0,cont5mil=0,cont2mil=0,cont1mil=0,cont500=0,cont200=0,cont100=0,cont50=0,restante=0;
+
+    cout<<"Ingrese cantidad de dinero:";
+    cin>>cantidadDinero;
+
+
+    while(cantidadDinero>=50000){
+        cantidadDinero=cantidadDinero-50000;
+        cont50mil++;
+
+    }
+
+    while(cantidadDinero>=20000){
+        cantidadDinero=cantidadDinero-20000;
+        cont20mil++;
+
+    }
+
+    while(cantidadDinero>=10000){
+        cantidadDinero=cantidadDinero-10000;
+        cont10mil++;
+
+    }
+
+
+    while(cantidadDinero>=5000){
+        cantidadDinero=cantidadDinero-5000;
+        cont5mil++;
+
+    }
+
+    while(cantidadDinero>=2000){
+        cantidadDinero=cantidadDinero-2000;
+        cont2mil++;
+
+    }
+
+
+
+    while(cantidadDinero>=1000){
+        cantidadDinero=cantidadDinero-1000;
+        cont1mil++;
+
+    }
+
+    while(cantidadDinero>=500){
+        cantidadDinero=cantidadDinero-500;
+        cont500++;
+
+    }
+
+
+    while(cantidadDinero>=200){
+        cantidadDinero=cantidadDinero-200;
+        cont200++;
+
+    }
+
+    while(cantidadDinero>=100){
+        cantidadDinero=cantidadDinero-100;
+        cont100++;
+
+    }
+
+    while(cantidadDinero>=50){
+        cantidadDinero=cantidadDinero-50;
+        cont50++;
+
+    }
+
+   
+
+
+
+
+
+
+
+    cout<<"50 mil:"<<cont50mil<<endl<<"20 mil:"<<cont20mil<<endl<<"10 mil:"<<cont10mil<<endl<<"5 mil:"<<cont5mil<<endl<<"2 mil:"<<cont2mil<<endl<<"1 mil:"<<cont1mil<<endl<<"500:"<<cont500<<endl<<"200:"<<cont200<<endl<<"100:"<<cont100<<endl<<"50:"<<cont50<<endl<<"Restante:"<<cantidadDinero;
+
+    return 0;
+}
