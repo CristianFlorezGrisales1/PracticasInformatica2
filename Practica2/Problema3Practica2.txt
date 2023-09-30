@@ -1,0 +1,37 @@
+#include <iostream>
+
+using namespace std;
+
+bool sonIguales(const char* cadena1, const char* cadena2) {
+
+    while (*cadena1 != '\0' && *cadena2 != '\0') {
+        if (*cadena1 != *cadena2) {
+            return false; // Si un carácter es diferente, las cadenas no son iguales
+        }
+        cadena1++;
+        cadena2++;
+    }
+
+    // Comprobamos si ambas cadenas tienen la misma longitud
+    return (*cadena1 == '\0' && *cadena2 == '\0');
+}
+
+int main() {
+    char cadena1[100];
+    char cadena2[100];
+
+    cout << "Ingrese la primera palabra: ";
+    cin >> cadena1;
+
+    cout << "Ingrese la segunda palabra: ";
+    cin >> cadena2;
+
+    if (sonIguales(cadena1, cadena2)) {
+        cout << "Las palabras son iguales." << endl;
+    } else {
+        cout << "Las palabras no son iguales." << endl;
+    }
+
+    return 0;
+}
+
