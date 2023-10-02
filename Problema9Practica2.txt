@@ -1,0 +1,41 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    string cadena;
+
+    cout << "Ingrese un numero n: ";
+            cin >> n;
+
+    cout << "Ingrese una cadena de caracteres numericos: ";
+            cin >> cadena;
+
+    int longitud = cadena.length();
+    int suma = 0;
+    string resultado = "Original: " + cadena + "\nSuma: ";
+
+    // Agregar ceros a la izquierda si es necesario
+    while (longitud % n != 0) {
+        cadena = "0" + cadena;
+        longitud++;
+    }
+
+    // Separar la cadena en números de n cifras, sumarlos e imprimir el resultado
+    for (int i = 0; i < longitud; i += n) {
+        string numStr = cadena.substr(i, n);
+        int num = stoi(numStr);
+        suma += num;
+
+        if (i > 0) {
+            resultado += "+";
+        }
+
+        resultado += numStr;
+    }
+
+    resultado += " = " + to_string(suma);
+    cout << resultado << endl;
+
+    return 0;
+}
