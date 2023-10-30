@@ -1,0 +1,314 @@
+#ifndef FUNCIONESBANCO_H
+#define FUNCIONESBANCO_H
+
+#endif // FUNCIONESBANCO_H
+
+#include<iostream>
+#include <fstream>
+#include <string>
+#include<limits>
+#include <map>
+#include <vector>
+
+using namespace std;
+
+void menuPrincipal();
+
+
+
+
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+
+string convertirBinario(string textoCualquiera, int semilla) {
+
+
+    string oldBinario;
+
+    for (char caracter : textoCualquiera) {
+        // Convierte cada carácter en su valor ASCII
+        int valorASCII = static_cast<int>(caracter);
+
+        // Convierte el valor ASCII en una representación binaria de 8 bits
+        for (int i = 7; i >= 0; i--) {
+            oldBinario += ((valorASCII & (1 << i)) ? '1' : '0');
+        }
+    }
+
+
+    return oldBinario;
+
+}
+string metodo2(string sinCodificar, int semilla){
+
+    string BinarioEncriptadoF="";
+    int limiteInferior=0;
+
+
+    int longitudBinario=sinCodificar.size();
+    int numbloques=longitudBinario/semilla;
+    int contadorBloques=0;
+
+    while(contadorBloques<numbloques){
+
+        char ultimoCaracter = sinCodificar.back();
+        string subCadena = sinCodificar.substr(limiteInferior, semilla-1);
+
+        string bloqueCodificado=ultimoCaracter+subCadena;
+
+        BinarioEncriptadoF=BinarioEncriptadoF+bloqueCodificado;
+        contadorBloques++;
+
+        bloqueCodificado="";
+        limiteInferior=limiteInferior+semilla;
+    }
+
+    return BinarioEncriptadoF;
+}
+
+
+
+string desenEncriptacionMetodo2(string textoBinario, int semilla){
+
+    string BinarioDesencriptadoF="";
+    int limiteInferior=1;
+
+
+    int longitudBinario=textoBinario.size();
+    int numbloques=longitudBinario/semilla;
+    int contadorBloques=0;
+    int primerCaracterBloque=0;
+
+    while(contadorBloques<numbloques){
+
+        char primerCaracter = textoBinario[primerCaracterBloque];
+        string subCadena = textoBinario.substr(limiteInferior, semilla-1);
+
+        string bloqueDescodificado=subCadena+primerCaracter;
+
+        BinarioDesencriptadoF=BinarioDesencriptadoF+bloqueDescodificado;
+        contadorBloques++;
+
+        bloqueDescodificado="";
+        limiteInferior=limiteInferior+semilla;
+        primerCaracterBloque=primerCaracterBloque+semilla;
+    }
+
+
+    return BinarioDesencriptadoF;
+}
+
+string abrirSudo(int numero){
+
+    int contLineas=0;
+
+
+    ifstream archivo("C:\\Users\\ASUS\\Desktop\\Semestre 3 U.de.A\\Informatica II\\Laboratorios\\Laboratorio 3\\archivos de txt para el banco\\sudo.txt");
+
+    if (archivo.is_open()) {
+        string linea=" ";
+        while (getline(archivo, linea)) {
+            contLineas++;
+            if (contLineas==numero){
+                return linea;
+            }
+            }
+        archivo.close();
+    } else {
+        cerr << "No se pudo abrir el archivo." << endl;
+        string linea="no se puedo abrir el archivo";
+
+        return linea;
+
+    }
+
+
+}
+
+string abrirArchivoDeUsuario(int numero){
+
+    int contLineas=0;
+
+
+    ifstream archivo("C:\\Users\\ASUS\\Desktop\\Semestre 3 U.de.A\\Informatica II\\Laboratorios\\Laboratorio 3\\archivos de txt para el banco\\Registro de Usuarios.txt");
+
+    if (archivo.is_open()) {
+        string linea=" ";
+        while (getline(archivo, linea)) {
+            contLineas++;
+            if (contLineas==numero){
+                return linea;
+            }
+        }
+        archivo.close();
+    } else {
+        cerr << "No se pudo abrir el archivo." << endl;
+        string linea="no se puedo abrir el archivo";
+
+        return linea;
+
+    }
+
+}
+
+void registarUsuarios() {
+    string variableRegistro;
+    int numeroUsuario;
+
+    cout << "Ingrese numero de usuario: ";
+    cin >> numeroUsuario;
+
+    // Limpia el búfer de entrada para evitar problemas con getline
+    cin.clear();
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    cout << "Ingrese el usuario teniendo en cuenta este formato: cedula clave saldo" << endl;
+    cout << ":";
+
+    getline(cin, variableRegistro);
+
+    ofstream archivo;
+
+    archivo.open("C:\\Users\\ASUS\\Desktop\\Semestre 3 U.de.A\\Informatica II\\Laboratorios\\Laboratorio 3\\archivos de txt para el banco\\Registro de Usuarios.txt", ios::app);  // Abre en modo de anexar
+
+    if (archivo.fail()) {
+        cout << "ERROR, NO SE PUDO ABRIR EL ARCHIVO" << endl;
+        cout << "Redireccionando al menú principal..." << endl;
+            menuPrincipal();
+    }
+
+    archivo << numeroUsuario << ") " << variableRegistro<<"$ cop"<< endl;  // Incluye el número de usuario y agrega una nueva línea
+    archivo.close();
+}
+
+
+
+void funcionesDeAdministrador(){
+    int opcion;
+    cout<<"ingrese 1 para registrar usuarios o ingrese cualquier otro numero para volver al menu de inicio:";
+    cin>>opcion;
+    switch (opcion) {
+    case 1:
+            bool valor=true;
+            while(valor){
+                int numero;
+            cout<<"Ingrese 1 para para anadir nuevo usuario, o cualquier otro numero para volver al menu principal:"<<endl;
+                cin>>numero;
+                if (numero==1){
+                registarUsuarios();
+                }
+                else{
+                cout<<"Rediccionando al menu principal...................................."<<endl;
+                menuPrincipal();
+                }
+            }
+
+        break;
+    }
+}
+
+
+
+void IngresarComoAdministrador(){
+    int numeroDeAdministrador=0;
+    string contrasena;
+    cout<<"Ingrese su contrasena:";
+    cin>>contrasena;
+    cout<<"Ingrese su numero de administrador:";
+    cin>>numeroDeAdministrador;
+    string archivo=abrirSudo(numeroDeAdministrador);
+    string archivoDesencriptado=desenEncriptacionMetodo2(archivo,4);
+
+
+    string contraseñaBinaria=convertirBinario(contrasena,4);
+
+    if(archivoDesencriptado==contraseñaBinaria){
+        cout<<"ACCESO PERMITIDO"<<endl;
+        cout<<archivoDesencriptado<<endl;
+        cout<<contraseñaBinaria<<endl;
+        funcionesDeAdministrador();
+    }
+
+    else{
+        cout<<"ACCESO DENEGADO"<<endl;
+        cout<<archivoDesencriptado<<endl;
+        cout<<contraseñaBinaria<<endl;
+        cout<<"VOLVIENDO AL MENU PRINCIPAL......................"<<endl;
+        menuPrincipal();
+
+        }
+}
+
+void consultarSaldo(){
+        int opcion;
+        int numeroUsuario;
+        cout<<"Ingrese su numero de usuario:";
+        cin>>numeroUsuario;
+        string lineaUsuario=abrirArchivoDeUsuario(numeroUsuario);
+        cout<<"Por favor recuerda que el formato de visualizacion es CC Clave Saldo"<<endl;
+        cout<<lineaUsuario<<endl;
+        cout<<"Para consultar saldo ingrese 1 , para salir al menu principal ingrese cualquier numero:";
+        cin>>opcion;
+        if (opcion==1){
+        consultarSaldo();
+        }
+        else{
+        menuPrincipal();
+        }
+
+}
+void retirarDinero(){
+}
+
+
+void IngresarComoUsuario() {
+        int opcion;
+        cout << "Bienvenido senor@ usuario" <<endl;
+        cout << "Para consultar saldo ingrese 1, para retirar dinero ingrese 2, para volver al menu principal ingrese cualquier otro numero: ";
+        cin >> opcion;
+
+        switch (opcion) {
+        case 1:
+        consultarSaldo();
+        break;
+        case 2:
+        retirarDinero();
+        break;
+        default:
+
+        cout <<"Volviendo al menu principal..........................................." <<endl;
+        menuPrincipal();
+            break;
+        }
+}
+
+
+
+
+
+void menuPrincipal(){
+    int opcion=0;
+    cout<<"Para ingresar como usuario administrador ingrese 1 para acceder como usuario normal ingrese 2:";
+    cin>>opcion;
+
+    switch (opcion) {
+    case 1:
+        cout<<"\n";
+        cout<<"Inicializando proceso para ingresar como administrador................................................................................."<<endl;
+        IngresarComoAdministrador();
+
+
+        break;
+    case 2:
+         cout<<"\n";
+        cout<<"Inicializando proceso para ingresar como usuario........................................................................................"<<endl;
+        IngresarComoUsuario();
+        break;
+
+
+    default:
+        cout<<"ERORR OPCION NO VALIDA"<<endl;
+        menuPrincipal();
+    }
+
+}
