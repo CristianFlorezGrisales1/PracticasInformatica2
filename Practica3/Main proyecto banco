@@ -1,0 +1,13 @@
+#include <iostream>
+#include<FuncionesBanco.h>
+
+using namespace std;
+
+int main()
+{
+    cout<<"BIENVENIDO AL BANCO"<<endl;
+    menuPrincipal();
+
+
+    return 0;
+}
